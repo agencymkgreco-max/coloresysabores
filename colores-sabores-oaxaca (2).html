@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colores y Sabores de Oaxaca — Chocolate de Alta Gama</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Raleway:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root{--ob:#0a0804;--cd:#1a1008;--cm:#2d1e0d;--g:#c9a84c;--gl:#e8c97a;--cr:#f0e6d0;--va:#7ab870;--tl:#c05a30;--st:#6b5c4a;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--ob);color:var(--cr);font-family:'Raleway',sans-serif;font-weight:300;overflow-x:hidden;}
+
+/* ── CURSOR SEMILLA DE CACAO ── */
+*{cursor:none!important;}
+#cursor-cacao{position:fixed;top:0;left:0;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:transform .08s ease,opacity .3s ease;will-change:transform;}
+#cursor-cacao svg{display:block;filter:drop-shadow(0 0 6px rgba(201,168,76,.45));transition:transform .25s cubic-bezier(.34,1.56,.64,1),filter .25s ease;}
+body.cursor-hover #cursor-cacao svg{transform:scale(1.35);filter:drop-shadow(0 0 12px rgba(232,201,122,.7));}
+body.cursor-click #cursor-cacao svg{transform:scale(.85);filter:drop-shadow(0 0 3px rgba(201,168,76,.3));}
+#cursor-trail{position:fixed;top:0;left:0;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);width:6px;height:6px;border-radius:50%;background:rgba(201,168,76,.35);transition:transform .18s ease,opacity .3s ease;will-change:transform;}
+
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:9000;opacity:.5;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:24px 60px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,padding .4s;}
+nav.scrolled{background:rgba(10,8,4,.96);backdrop-filter:blur(12px);padding:16px 60px;border-bottom:1px solid rgba(201,168,76,.08);}
+.nav-brand{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.3em;color:var(--g);text-decoration:none;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-family:'Raleway',sans-serif;font-weight:300;font-size:.7rem;letter-spacing:.2em;color:rgba(240,230,208,.48);text-decoration:none;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--g);}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;}
+.nav-toggle span{display:block;width:26px;height:1px;background:var(--g);transition:transform .3s,opacity .3s;}
+.nav-toggle.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+.mobile-menu{display:none;position:fixed;inset:0;background:rgba(10,8,4,.97);z-index:490;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:.3em;color:rgba(240,230,208,.6);text-decoration:none;text-transform:uppercase;transition:color .3s;}
+.mobile-menu a:hover{color:var(--g);}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:80px 40px;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 40% at 50% 20%,rgba(74,47,16,.4) 0%,transparent 70%),radial-gradient(ellipse 40% 60% at 80% 70%,rgba(45,74,42,.12) 0%,transparent 60%),radial-gradient(ellipse 30% 40% at 20% 80%,rgba(139,58,26,.1) 0%,transparent 60%);}
+.hero-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(700px,92vw);height:min(700px,92vw);border:1px solid rgba(201,168,76,.07);border-radius:50%;animation:spin 70s linear infinite;}
+.hero-orb::before{content:'';position:absolute;inset:40px;border:1px solid rgba(201,168,76,.04);border-radius:50%;}
+.hero-orb::after{content:'';position:absolute;inset:80px;border:1px solid rgba(201,168,76,.025);border-radius:50%;}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.45em;color:var(--g);text-transform:uppercase;margin-bottom:40px;opacity:0;animation:fu 1s .3s ease forwards;}
+.hero-logo{text-align:center;position:relative;z-index:2;opacity:0;animation:fu 1.2s .5s ease forwards;}
+.hero-main{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.5rem,9vw,7.5rem);line-height:.9;letter-spacing:.06em;color:var(--cr);}
+.hero-main span{display:block;font-style:italic;color:var(--gl);}
+.hero-sub{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.5vw,.85rem);letter-spacing:.5em;color:var(--st);margin-top:18px;text-transform:uppercase;}
+.hero-div{display:flex;align-items:center;gap:16px;margin:40px 0;opacity:0;animation:fu 1s .9s ease forwards;}
+.hero-div::before,.hero-div::after{content:'';height:1px;width:clamp(60px,10vw,120px);background:linear-gradient(to right,transparent,var(--g));}
+.hero-div::after{transform:rotate(180deg);}
+.gem{width:6px;height:6px;border:1px solid var(--g);transform:rotate(45deg);}
+.hero-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.95rem,2.5vw,1.4rem);color:rgba(240,230,208,.55);text-align:center;max-width:520px;line-height:1.9;opacity:0;animation:fu 1s 1.1s ease forwards;}
+.hero-scroll{position:absolute;bottom:36px;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fu 1s 1.6s ease forwards;}
+.hero-scroll span{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.35em;color:var(--st);}
+.scroll-bar{width:1px;height:52px;background:linear-gradient(to bottom,var(--g),transparent);animation:sp 2.2s ease infinite;}
+@keyframes sp{0%,100%{opacity:.3;transform:scaleY(.7);}50%{opacity:1;transform:scaleY(1);}}
+@keyframes fu{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* CINEMATIC BANNER */
+#banner-img{position:relative;height:100vh;overflow:hidden;}
+.b-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5) saturate(.75);transform:scale(1.1);transition:filter .4s;}
+.b-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(155deg,#1a1008 0%,#0a0804 40%,#2d1e0d 70%,#0f0905 100%);}
+.b-art{width:min(520px,80vw);opacity:.11;}
+.b-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,8,4,.1) 0%,rgba(10,8,4,.04) 35%,rgba(10,8,4,.04) 60%,rgba(10,8,4,.88) 90%,#0a0804 100%);}
+.b-caption{position:absolute;bottom:clamp(60px,10vw,110px);left:0;right:0;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 clamp(24px,6vw,80px);}
+.b-eyebrow{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.5em;color:var(--g);text-transform:uppercase;margin-bottom:20px;opacity:0;transform:translateY(20px);transition:opacity .8s .2s,transform .8s .2s;}
+.b-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,6vw,5rem);line-height:1;color:var(--cr);letter-spacing:.04em;opacity:0;transform:translateY(24px);transition:opacity .9s .4s,transform .9s .4s;}
+.b-title em{font-style:italic;color:var(--gl);}
+.b-desc{font-size:clamp(.78rem,1.5vw,.95rem);color:rgba(240,230,208,.5);margin-top:20px;max-width:500px;line-height:1.9;opacity:0;transform:translateY(20px);transition:opacity .8s .6s,transform .8s .6s;}
+#banner-img.iv .b-eyebrow,#banner-img.iv .b-title,#banner-img.iv .b-desc{opacity:1;transform:translateY(0);}
+.b-note{position:absolute;top:24px;left:50%;transform:translateX(-50%);background:rgba(201,168,76,.12);border:1px dashed rgba(201,168,76,.35);color:rgba(201,168,76,.7);font-size:.58rem;letter-spacing:.15em;padding:9px 22px;border-radius:2px;white-space:nowrap;font-family:'Cinzel',serif;pointer-events:none;}
+
+/* FILOSOFÍA */
+#filosofia{padding:clamp(80px,12vw,160px) clamp(28px,6vw,80px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(60px,8vw,120px);align-items:center;max-width:1400px;margin:0 auto;}
+.fil-text p{font-size:clamp(.82rem,1.5vw,.95rem);line-height:2.3;color:rgba(240,230,208,.62);margin-top:32px;}
+.fil-text p+p{margin-top:18px;}
+.stat-row{display:flex;gap:clamp(20px,3vw,48px);margin-top:48px;flex-wrap:wrap;}
+.stat{border-left:1px solid rgba(201,168,76,.3);padding-left:18px;}
+.stat-n{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:var(--gl);line-height:1;}
+.stat-l{font-size:.6rem;letter-spacing:.2em;color:var(--st);text-transform:uppercase;margin-top:6px;}
+.c-diag{width:min(280px,58vw);height:min(280px,58vw);position:relative;margin:0 auto;}
+.c-ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.18);}
+.r1{inset:0;animation:spin 45s linear infinite;}
+.r2{inset:28px;animation:spin 32s linear infinite reverse;border-style:dashed;opacity:.55;}
+.r3{inset:56px;animation:spin 18s linear infinite;opacity:.38;}
+.c-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+.c-glyph{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:var(--g);opacity:.72;}
+.c-label{display:block;font-family:'Cinzel',serif;font-size:.46rem;letter-spacing:.3em;color:var(--st);margin-top:8px;text-transform:uppercase;}
+
+/* MARCAS */
+#marcas{padding-bottom:clamp(80px,12vw,160px);}
+.marcas-hd{text-align:center;padding:0 clamp(24px,6vw,80px) clamp(60px,8vw,80px);}
+.marcas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(201,168,76,.04);}
+.mc{position:relative;overflow:hidden;}
+.mc:nth-child(1){background:linear-gradient(155deg,#1a1008,#2d1e0d 60%,#1f1508);}
+.mc:nth-child(2){background:linear-gradient(155deg,#100a06,#1e0e05 60%,#2a1208);}
+.mc:nth-child(3){background:linear-gradient(155deg,#06100a,#0a1a0e 60%,#0d2012);}
+.mc::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .5s;pointer-events:none;}
+.mc:nth-child(1)::after{background:radial-gradient(circle at 40% 50%,rgba(201,168,76,.07),transparent 60%);}
+.mc:nth-child(2)::after{background:radial-gradient(circle at 40% 50%,rgba(192,90,48,.09),transparent 60%);}
+.mc:nth-child(3)::after{background:radial-gradient(circle at 40% 50%,rgba(122,184,112,.07),transparent 60%);}
+.mc:hover::after{opacity:1;}
+.mc-in{padding:clamp(40px,5vw,80px) clamp(28px,4vw,60px);position:relative;min-height:640px;display:flex;flex-direction:column;justify-content:space-between;}
+.mc-bg{position:absolute;bottom:-30px;right:-10px;font-family:'Cormorant Garamond',serif;font-size:10rem;font-weight:300;line-height:1;opacity:.04;pointer-events:none;}
+.mc:nth-child(1) .mc-bg{color:var(--g);}
+.mc:nth-child(2) .mc-bg{color:var(--tl);}
+.mc:nth-child(3) .mc-bg{color:var(--va);}
+.mc-num{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.4em;color:rgba(240,230,208,.22);margin-bottom:48px;}
+.mc-ico{width:52px;height:52px;margin-bottom:26px;opacity:.72;}
+.mc-tag{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.5em;text-transform:uppercase;margin-bottom:14px;}
+.mc:nth-child(1) .mc-tag{color:var(--g);}
+.mc:nth-child(2) .mc-tag{color:var(--tl);}
+.mc:nth-child(3) .mc-tag{color:var(--va);}
+.mc-name{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.6rem,2.2vw,2.5rem);line-height:1.1;color:var(--cr);margin-bottom:10px;}
+.mc-name em{display:block;font-style:italic;}
+.mc:nth-child(1) .mc-name em{color:var(--gl);}
+.mc:nth-child(2) .mc-name em{color:var(--tl);}
+.mc:nth-child(3) .mc-name em{color:var(--va);}
+.mc-div{width:34px;height:1px;margin:22px 0;}
+.mc:nth-child(1) .mc-div{background:var(--g);}
+.mc:nth-child(2) .mc-div{background:var(--tl);}
+.mc:nth-child(3) .mc-div{background:var(--va);}
+.mc-desc{font-size:clamp(.76rem,1.2vw,.88rem);line-height:2;color:rgba(240,230,208,.5);}
+.mc-notes{margin-top:34px;}
+.mc-note{display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:.7rem;color:rgba(240,230,208,.38);letter-spacing:.08em;}
+.nd{width:4px;height:4px;border-radius:50%;flex-shrink:0;}
+.mc:nth-child(1) .nd{background:var(--g);}
+.mc:nth-child(2) .nd{background:var(--tl);}
+.mc:nth-child(3) .nd{background:var(--va);}
+.mc-cta{display:inline-flex;align-items:center;gap:14px;margin-top:38px;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;color:rgba(240,230,208,.35);background:none;border:none;transition:color .3s;}
+.mc:nth-child(1) .mc-cta:hover{color:var(--g);}
+.mc:nth-child(2) .mc-cta:hover{color:var(--tl);}
+.mc:nth-child(3) .mc-cta:hover{color:var(--va);}
+.mc-cta-line{width:28px;height:1px;transition:width .3s;}
+.mc:nth-child(1) .mc-cta-line{background:var(--g);}
+.mc:nth-child(2) .mc-cta-line{background:var(--tl);}
+.mc:nth-child(3) .mc-cta-line{background:var(--va);}
+.mc-cta:hover .mc-cta-line{width:48px;}
+
+/* MARQUEE */
+.marquee-band{padding:clamp(40px,6vw,70px) 0;border-top:1px solid rgba(201,168,76,.06);border-bottom:1px solid rgba(201,168,76,.06);overflow:hidden;position:relative;}
+.marquee-band-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 100% at 50% 50%,rgba(74,47,16,.18),transparent 70%);}
+.marquee-track{display:flex;gap:56px;width:max-content;animation:mq 22s linear infinite;font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(1.3rem,3vw,2.2rem);color:rgba(201,168,76,.18);letter-spacing:.06em;}
+.mq-sep{color:rgba(201,168,76,.13);}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* PROCESO */
+#proceso{padding:clamp(80px,12vw,160px) clamp(28px,6vw,80px);max-width:1400px;margin:0 auto;}
+.proc-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:clamp(60px,8vw,100px);gap:40px;flex-wrap:wrap;}
+.proc-q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(.88rem,1.8vw,1.1rem);color:rgba(240,230,208,.3);max-width:320px;line-height:1.9;text-align:right;}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(201,168,76,.06);}
+.paso{background:var(--ob);padding:clamp(30px,4vw,50px) clamp(22px,3vw,40px);position:relative;overflow:hidden;transition:background .4s;}
+.paso:hover{background:var(--cd);}
+.paso-n{font-family:'Cormorant Garamond',serif;font-size:4.8rem;font-weight:300;color:rgba(201,168,76,.09);line-height:1;margin-bottom:18px;transition:color .4s;}
+.paso:hover .paso-n{color:rgba(201,168,76,.18);}
+.paso-t{font-family:'Cinzel',serif;font-size:.63rem;letter-spacing:.3em;color:var(--g);text-transform:uppercase;margin-bottom:12px;}
+.paso-d{font-size:.78rem;line-height:1.95;color:rgba(240,230,208,.46);}
+
+/* PRODUCTOS */
+#productos{padding:clamp(80px,12vw,160px) clamp(28px,6vw,80px);max-width:1400px;margin:0 auto;}
+.prod-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:clamp(48px,6vw,72px);gap:24px;flex-wrap:wrap;}
+.prod-filter{display:flex;gap:8px;flex-wrap:wrap;}
+.fbtn{padding:8px 20px;background:none;border:1px solid rgba(201,168,76,.18);font-family:'Cinzel',serif;font-size:.53rem;letter-spacing:.25em;color:rgba(240,230,208,.4);text-transform:uppercase;transition:all .3s;}
+.fbtn.active,.fbtn:hover{border-color:var(--g);color:var(--gl);background:rgba(201,168,76,.05);}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
+.pc{position:relative;overflow:hidden;transition:transform .4s ease;}
+.pc:hover{transform:translateY(-4px);}
+.pc.feat{grid-column:span 2;}
+.pc-ph{width:100%;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:filter .5s;filter:brightness(.68);}
+.pc.feat .pc-ph{aspect-ratio:auto;min-height:400px;}
+.pc:hover .pc-ph{filter:brightness(.88);}
+.pc-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,4,.92) 0%,rgba(10,8,4,.08) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(18px,3vw,30px);transform:translateY(18px);opacity:.82;transition:transform .4s,opacity .4s;}
+.pc:hover .pc-ov{transform:translateY(0);opacity:1;}
+.pc-marca{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.4em;text-transform:uppercase;margin-bottom:8px;}
+.pm1{color:var(--g);}.pm2{color:var(--tl);}.pm3{color:var(--va);}
+.pc-name{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.2rem,2vw,1.7rem);color:var(--cr);margin-bottom:6px;}
+.pc-name em{font-style:italic;}
+.pc-desc{font-size:.7rem;color:rgba(240,230,208,.48);line-height:1.7;margin-bottom:14px;}
+.pc-tag{display:inline-flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.22em;color:rgba(240,230,208,.32);text-transform:uppercase;}
+.pc-tag::before{content:'';width:18px;height:1px;background:rgba(201,168,76,.35);}
+
+/* FRASE */
+.frase{padding:clamp(80px,10vw,120px) clamp(28px,6vw,80px);text-align:center;background:linear-gradient(135deg,var(--cd) 0%,var(--ob) 50%,var(--cd) 100%);position:relative;overflow:hidden;}
+.frase::before,.frase::after{content:'';position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.055);}
+.frase::before{width:580px;height:580px;top:-220px;left:-200px;}
+.frase::after{width:420px;height:420px;bottom:-180px;right:-100px;}
+.frase blockquote{position:relative;z-index:2;max-width:820px;margin:0 auto;}
+.frase blockquote p{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(1.4rem,3.5vw,2.8rem);line-height:1.4;color:var(--cr);letter-spacing:.02em;}
+.frase blockquote p em{color:var(--gl);}
+.frase blockquote cite{display:block;margin-top:28px;font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.4em;color:var(--st);text-transform:uppercase;font-style:normal;}
+
+/* ALTA COCINA */
+#alta{padding:clamp(80px,12vw,160px) clamp(28px,6vw,80px);position:relative;overflow:hidden;background:linear-gradient(to bottom,var(--ob),var(--cd),var(--ob));}
+#alta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 50% 50%,rgba(74,47,16,.2),transparent 70%);}
+.alta-c{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:clamp(60px,8vw,120px);align-items:center;max-width:1400px;margin:0 auto;}
+.alta-t p{font-size:clamp(.8rem,1.5vw,.93rem);line-height:2.2;color:rgba(240,230,208,.56);margin-bottom:18px;}
+.chefs{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.chef{background:rgba(201,168,76,.03);border:1px solid rgba(201,168,76,.07);padding:clamp(22px,3vw,32px) clamp(18px,2.5vw,28px);transition:border-color .3s,background .3s;}
+.chef:hover{border-color:rgba(201,168,76,.2);background:rgba(201,168,76,.06);}
+.chef-i{font-size:1.4rem;margin-bottom:14px;}
+.chef-t{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.3em;color:var(--g);text-transform:uppercase;margin-bottom:10px;}
+.chef-d{font-size:.74rem;line-height:1.85;color:rgba(240,230,208,.4);}
+
+/* GALERÍA */
+#galeria{padding:clamp(80px,12vw,160px) 0;overflow:hidden;}
+.gal-hd{padding:0 clamp(28px,6vw,80px) clamp(56px,7vw,80px);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:32px;}
+.gal-note{font-size:clamp(.7rem,1.2vw,.82rem);color:rgba(240,230,208,.32);max-width:300px;line-height:1.9;text-align:right;font-style:italic;font-family:'Cormorant Garamond',serif;}
+.gal-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(3,200px);gap:3px;}
+.gi{position:relative;overflow:hidden;}
+.gi:nth-child(1){grid-column:1/5;grid-row:1/3;}
+.gi:nth-child(2){grid-column:5/9;grid-row:1/2;}
+.gi:nth-child(3){grid-column:9/13;grid-row:1/3;}
+.gi:nth-child(4){grid-column:5/7;grid-row:2/3;}
+.gi:nth-child(5){grid-column:7/9;grid-row:2/3;}
+.gi:nth-child(6){grid-column:1/5;grid-row:3/4;}
+.gi:nth-child(7){grid-column:5/9;grid-row:3/4;}
+.gi:nth-child(8){grid-column:9/13;grid-row:3/4;}
+.gi-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:filter .6s;filter:brightness(.72);}
+.gi:hover .gi-ph{filter:brightness(1);}
+.gi-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,4,.75) 0%,transparent 55%);display:flex;align-items:flex-end;padding:16px 20px;opacity:0;transition:opacity .4s;}
+.gi:hover .gi-ov{opacity:1;}
+.gi-lbl{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.3em;color:var(--g);text-transform:uppercase;}
+.gal-cta{padding:clamp(36px,5vw,56px) clamp(28px,6vw,80px) 0;display:flex;justify-content:center;}
+.btn-sec{display:inline-flex;align-items:center;gap:14px;padding:14px 40px;border:1px solid rgba(201,168,76,.28);font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.3em;color:rgba(240,230,208,.46);text-decoration:none;text-transform:uppercase;transition:all .4s;background:transparent;}
+.btn-sec:hover{border-color:rgba(201,168,76,.55);color:var(--gl);background:rgba(201,168,76,.05);}
+
+/* CONTACTO */
+#contacto{padding:clamp(80px,12vw,160px) clamp(28px,6vw,80px);text-align:center;position:relative;overflow:hidden;}
+.ct-rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.ct-rings span{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.04);transform:translate(-50%,-50%);}
+.ct-rings span:nth-child(1){width:280px;height:280px;}
+.ct-rings span:nth-child(2){width:480px;height:480px;}
+.ct-rings span:nth-child(3){width:680px;height:680px;}
+.ct-in{position:relative;z-index:2;max-width:540px;margin:0 auto;}
+.ct-in p{font-size:clamp(.78rem,1.5vw,.9rem);line-height:2.1;color:rgba(240,230,208,.46);margin:26px 0 46px;}
+.btn-gold{display:inline-flex;align-items:center;gap:16px;padding:18px 52px;border:1px solid rgba(201,168,76,.42);font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.4em;color:var(--gl);text-decoration:none;text-transform:uppercase;transition:all .4s;background:transparent;}
+.btn-gold:hover{background:rgba(201,168,76,.08);border-color:var(--g);letter-spacing:.5em;}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(201,168,76,.07);padding:clamp(28px,4vw,48px) clamp(24px,6vw,80px);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;}
+.ft-brand{font-family:'Cormorant Garamond',serif;font-size:1rem;color:rgba(240,230,208,.26);font-style:italic;}
+.ft-marks{display:flex;gap:clamp(14px,2vw,32px);justify-content:center;flex-wrap:wrap;}
+.ft-marks span{font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.25em;color:rgba(240,230,208,.16);text-transform:uppercase;}
+.ft-copy{font-size:.58rem;color:rgba(240,230,208,.16);letter-spacing:.1em;text-align:right;}
+
+/* SHARED */
+.eyebrow{font-family:'Cinzel',serif;font-size:.56rem;letter-spacing:.5em;color:var(--g);text-transform:uppercase;margin-bottom:14px;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1;color:var(--cr);}
+.sec-title em{font-style:italic;color:var(--gl);}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.vis{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.22s;}.d3{transition-delay:.34s;}.d4{transition-delay:.46s;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  #filosofia{grid-template-columns:1fr;}
+  .marcas-grid{grid-template-columns:1fr 1fr;}
+  .mc:nth-child(3){grid-column:span 2;}
+  .alta-c{grid-template-columns:1fr;}
+  .proc-grid{grid-template-columns:1fr 1fr;}
+  .prod-grid{grid-template-columns:1fr 1fr;}
+  .pc.feat{grid-column:span 2;}
+  .gal-grid{grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,180px);}
+  .gi:nth-child(1){grid-column:1/4;grid-row:1/3;}
+  .gi:nth-child(2){grid-column:4/7;grid-row:1/2;}
+  .gi:nth-child(3){grid-column:4/7;grid-row:2/3;}
+  .gi:nth-child(4){grid-column:1/3;grid-row:3/4;}
+  .gi:nth-child(5){grid-column:3/5;grid-row:3/4;}
+  .gi:nth-child(6){grid-column:5/7;grid-row:3/4;}
+  .gi:nth-child(7){grid-column:1/4;grid-row:4/5;}
+  .gi:nth-child(8){grid-column:4/7;grid-row:4/5;}
+  footer{grid-template-columns:1fr;text-align:center;}
+  .ft-copy{text-align:center;}
+  .prod-hd{flex-direction:column;align-items:flex-start;}
+  .proc-hd{flex-direction:column;align-items:flex-start;}
+  .proc-q{text-align:left;max-width:100%;}
+  .gal-hd{flex-direction:column;align-items:flex-start;}
+  .gal-note{text-align:left;}
+}
+@media(max-width:768px){
+  nav{padding:18px 24px;}
+  nav.scrolled{padding:14px 24px;}
+  .nav-links{display:none!important;}
+  .nav-toggle{display:flex;}
+  .marcas-grid{grid-template-columns:1fr;}
+  .mc:nth-child(3){grid-column:span 1;}
+  .mc-in{min-height:auto;}
+  .proc-grid{grid-template-columns:1fr;}
+  .chefs{grid-template-columns:1fr;}
+  .prod-grid{grid-template-columns:1fr;}
+  .pc.feat{grid-column:span 1;}
+  .pc.feat .pc-ph{min-height:300px;}
+  .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gi{grid-column:auto!important;grid-row:auto!important;}
+  .gi:nth-child(1),.gi:nth-child(3){grid-column:span 2!important;}
+  .gi-ph{height:160px;}
+  .b-note{display:none;}
+  footer{gap:14px;}
+}
+@media(max-width:480px){
+  .gal-grid{grid-template-columns:1fr;}
+  .gi:nth-child(1),.gi:nth-child(3){grid-column:span 1!important;}
+  .stat-row{flex-direction:column;gap:18px;}
+  .prod-filter{gap:6px;}
+  .fbtn{padding:7px 14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">C&S · Oaxaca</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#marcas">Marcas</a></li>
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#galeria">Galería</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<!-- Menú mobile separado -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#marcas" class="mm-link">Marcas</a>
+  <a href="#productos" class="mm-link">Productos</a>
+  <a href="#proceso" class="mm-link">Proceso</a>
+  <a href="#galeria" class="mm-link">Galería</a>
+  <a href="#contacto" class="mm-link">Contacto</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-orb"></div>
+  <p class="hero-eyebrow">Oaxaca · Artesanal · Alta Gama</p>
+  <div class="hero-logo">
+    <h1 class="hero-main">Colores<span>y Sabores</span></h1>
+    <p class="hero-sub">de Oaxaca</p>
+  </div>
+  <div class="hero-div"><div class="gem"></div></div>
+  <p class="hero-tag">Chocolate de origen artesanal,<br>molido en piedra, para la alta cocina mexicana.</p>
+  <div class="hero-scroll"><div class="scroll-bar"></div><span>Descubrir</span></div>
+</section>
+
+<!-- ═══ CINEMATIC BANNER ═══ -->
+<section id="banner-img">
+  <!--
+    ╔══════════════════════════════════════════════════════════╗
+    ║  REEMPLAZAR IMAGEN:                                      ║
+    ║  Borra el div .b-placeholder y pon:                      ║
+    ║  <img src="TU-FOTO.jpg" class="b-photo" alt="Cacao">    ║
+    ║  Formato recomendado: landscape, mínimo 1920×1080px      ║
+    ╚══════════════════════════════════════════════════════════╝
+  -->
+  <div class="b-placeholder">
+    <svg class="b-art" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="450" cy="280" rx="230" ry="135" fill="none" stroke="#c9a84c" stroke-width=".7" opacity=".5"/>
+      <ellipse cx="450" cy="280" rx="185" ry="108" fill="none" stroke="#c9a84c" stroke-width=".5" opacity=".35"/>
+      <path d="M450 145 Q462 195 450 280 Q438 365 450 415" fill="none" stroke="#c9a84c" stroke-width=".5" opacity=".4"/>
+      <path d="M285 255 Q365 270 450 280 Q535 290 615 310" fill="none" stroke="#c9a84c" stroke-width=".45" opacity=".3"/>
+      <path d="M295 305 Q370 293 450 280 Q530 267 610 250" fill="none" stroke="#c9a84c" stroke-width=".45" opacity=".3"/>
+      <ellipse cx="408" cy="268" rx="16" ry="22" fill="none" stroke="#c9a84c" stroke-width=".8" opacity=".5" transform="rotate(-12 408 268)"/>
+      <ellipse cx="450" cy="280" rx="16" ry="22" fill="none" stroke="#c9a84c" stroke-width=".8" opacity=".5"/>
+      <ellipse cx="492" cy="290" rx="16" ry="22" fill="none" stroke="#c9a84c" stroke-width=".8" opacity=".5" transform="rotate(10 492 290)"/>
+      <circle cx="450" cy="280" r="270" fill="none" stroke="#c9a84c" stroke-width=".35" opacity=".07"/>
+      <circle cx="450" cy="280" r="330" fill="none" stroke="#c9a84c" stroke-width=".25" opacity=".04"/>
+      <circle cx="450" cy="280" r="380" fill="none" stroke="#c9a84c" stroke-width=".2" opacity=".03"/>
+      <!-- Metate shape hint -->
+      <path d="M320 380 Q450 350 580 380 L600 410 Q450 395 300 410 Z" fill="none" stroke="#c9a84c" stroke-width=".5" opacity=".15"/>
+    </svg>
+  </div>
+  <div class="b-overlay"></div>
+  <div class="b-note">▸ Zona de imagen — reemplazar con foto del chocolate o proceso</div>
+  <div class="b-caption">
+    <p class="b-eyebrow">El origen · Theobroma Cacao</p>
+    <h2 class="b-title">Donde el grano<br>se vuelve <em>experiencia</em></h2>
+    <p class="b-desc">Cada tableta guarda memoria de suelo, de mano y de fuego lento sobre piedra de metate.</p>
+  </div>
+</section>
+
+<!-- ═══ FILOSOFÍA ═══ -->
+<section id="filosofia">
+  <div class="fil-text reveal">
+    <p class="eyebrow">La Casa Madre</p>
+    <h2 class="sec-title">Del grano<br>a la <em>experiencia</em></h2>
+    <p>Colores y Sabores de Oaxaca es la casa madre que articula tres expresiones únicas del cacao mexicano. Cada marca nace de un territorio, de una memoria, de un carácter distinto — pero todas comparten el mismo origen: la molienda en piedra y el compromiso con la autenticidad.</p>
+    <p>Nuestros chocolates están diseñados para el paladar exigente del chef, del sommelier de cacao, del conocedor que busca más allá de la confitería convencional.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Artesanal</div></div>
+      <div class="stat"><div class="stat-n">3</div><div class="stat-l">Expresiones</div></div>
+      <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Tradición viva</div></div>
+    </div>
+  </div>
+  <div class="reveal d2" style="display:flex;align-items:center;justify-content:center;">
+    <div class="c-diag">
+      <div class="c-ring r1"></div><div class="c-ring r2"></div><div class="c-ring r3"></div>
+      <div class="c-center"><div class="c-glyph">◈</div><small class="c-label">Theobroma Cacao</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MARCAS ═══ -->
+<section id="marcas">
+  <div class="marcas-hd reveal">
+    <p class="eyebrow">Tres Expresiones</p>
+    <h2 class="sec-title">Las <em>marcas</em></h2>
+  </div>
+  <div class="marcas-grid">
+    <div class="mc">
+      <div class="mc-in">
+        <div class="mc-bg">I</div>
+        <div>
+          <p class="mc-num">001 — Casa Madre</p>
+          <svg class="mc-ico" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" stroke="#c9a84c" stroke-width=".8" fill="none" opacity=".4"/><path d="M30 8L36 22L52 22L40 32L44 48L30 38L16 48L20 32L8 22L24 22Z" stroke="#c9a84c" stroke-width=".8" fill="none" opacity=".6"/></svg>
+          <p class="mc-tag">La Raíz · Chocolate Oaxaqueño</p>
+          <h3 class="mc-name">Colores y Sabores<br><em>de Oaxaca</em></h3>
+          <div class="mc-div"></div>
+          <p class="mc-desc">La expresión fundadora. Un chocolate de mesa oaxaqueño que recoge la tradición de los valles centrales: cacao tostado, canela verdadera, azúcar de piloncillo. El lenguaje de los colores y aromas que identifican a Oaxaca en el mundo.</p>
+        </div>
+        <div>
+          <div class="mc-notes">
+            <div class="mc-note"><div class="nd"></div>Chocolate de mesa tradicional</div>
+            <div class="mc-note"><div class="nd"></div>Molienda en piedra auténtica</div>
+            <div class="mc-note"><div class="nd"></div>Para ceremonias y alta cocina</div>
+          </div>
+          <a href="#contacto" class="mc-cta"><div class="mc-cta-line"></div>Conocer más</a>
+        </div>
+      </div>
+    </div>
+    <div class="mc">
+      <div class="mc-in">
+        <div class="mc-bg">II</div>
+        <div>
+          <p class="mc-num">002 — Prehispánico</p>
+          <svg class="mc-ico" viewBox="0 0 60 60"><polygon points="30,5 55,20 55,45 30,58 5,45 5,20" stroke="#c05a30" stroke-width=".8" fill="none" opacity=".4"/><polygon points="30,15 45,23 45,38 30,46 15,38 15,23" stroke="#c05a30" stroke-width=".6" fill="none" opacity=".5"/><circle cx="30" cy="30" r="5" stroke="#c05a30" stroke-width=".8" fill="none"/></svg>
+          <p class="mc-tag">Molienda · Centro del País</p>
+          <h3 class="mc-name">Molienda<br><em>Tlahuica</em></h3>
+          <div class="mc-div"></div>
+          <p class="mc-desc">Chocolate prehispánico para los amantes de los perfiles amargos y semiamargos. Diseñado para el paladar del centro de México, con ingredientes originales que rescatan las recetas ancestrales de los pueblos originarios. Sabor denso, terroso, austero.</p>
+        </div>
+        <div>
+          <div class="mc-notes">
+            <div class="mc-note"><div class="nd"></div>Perfil amargo y semiamargo</div>
+            <div class="mc-note"><div class="nd"></div>Ingredientes prehispánicos</div>
+            <div class="mc-note"><div class="nd"></div>Para chefs y alta cocina</div>
+          </div>
+          <a href="#contacto" class="mc-cta"><div class="mc-cta-line"></div>Conocer más</a>
+        </div>
+      </div>
+    </div>
+    <div class="mc">
+      <div class="mc-in">
+        <div class="mc-bg">III</div>
+        <div>
+          <p class="mc-num">003 — Cantera Viva</p>
+          <svg class="mc-ico" viewBox="0 0 60 60"><rect x="8" y="8" width="44" height="44" rx="2" stroke="#7ab870" stroke-width=".8" fill="none" opacity=".4"/><rect x="16" y="16" width="28" height="28" rx="1" stroke="#7ab870" stroke-width=".6" fill="none" opacity=".5" transform="rotate(45 30 30)"/><circle cx="30" cy="30" r="4" stroke="#7ab870" stroke-width=".8" fill="none"/></svg>
+          <p class="mc-tag">Homenaje · Cantera Verde</p>
+          <h3 class="mc-name">Verde<br><em>Antequera</em></h3>
+          <div class="mc-div"></div>
+          <p class="mc-desc">Un homenaje a la arquitectura de cantera verde que define la identidad de Oaxaca. Desde el Zócalo hasta los conventos del centro histórico, este chocolate lleva en su nombre el alma de la ciudad que en 1526 fue bautizada Antequera. Elegante, mineral, profundo.</p>
+        </div>
+        <div>
+          <div class="mc-notes">
+            <div class="mc-note"><div class="nd"></div>Chocolate negro natural</div>
+            <div class="mc-note"><div class="nd"></div>Homenaje al patrimonio oaxaqueño</div>
+            <div class="mc-note"><div class="nd"></div>Para alta cocina mexicana</div>
+          </div>
+          <a href="#contacto" class="mc-cta"><div class="mc-cta-line"></div>Conocer más</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MARQUEE ═══ -->
+<div class="marquee-band">
+  <div class="marquee-band-bg"></div>
+  <div class="marquee-track">
+    <span>Molienda en Piedra</span><span class="mq-sep">◆</span>
+    <span>Alta Cocina Mexicana</span><span class="mq-sep">◆</span>
+    <span>Cacao Artesanal</span><span class="mq-sep">◆</span>
+    <span>Oaxaca, México</span><span class="mq-sep">◆</span>
+    <span>Theobroma Cacao</span><span class="mq-sep">◆</span>
+    <span>Tradición Viva</span><span class="mq-sep">◆</span>
+    <span>Molienda en Piedra</span><span class="mq-sep">◆</span>
+    <span>Alta Cocina Mexicana</span><span class="mq-sep">◆</span>
+    <span>Cacao Artesanal</span><span class="mq-sep">◆</span>
+    <span>Oaxaca, México</span><span class="mq-sep">◆</span>
+    <span>Theobroma Cacao</span><span class="mq-sep">◆</span>
+    <span>Tradición Viva</span><span class="mq-sep">◆</span>
+  </div>
+</div>
+
+<!-- ═══ PRODUCTOS ═══ -->
+<section id="productos">
+  <div class="prod-hd reveal">
+    <div>
+      <p class="eyebrow">Catálogo</p>
+      <h2 class="sec-title">Nuestros <em>productos</em></h2>
+    </div>
+    <div class="prod-filter">
+      <button class="fbtn active" data-f="all">Todos</button>
+      <button class="fbtn" data-f="m1">C&S Oaxaca</button>
+      <button class="fbtn" data-f="m2">Tlahuica</button>
+      <button class="fbtn" data-f="m3">V. Antequera</button>
+    </div>
+  </div>
+  <div class="prod-grid" id="prodGrid">
+    <!-- P1 featured -->
+    <div class="pc feat" data-m="m1">
+      <div class="pc-ph" style="background:linear-gradient(135deg,#2d1e0d,#1a1008 60%,#2a1a08);min-height:400px;height:100%;">
+        <svg width="110" height="110" viewBox="0 0 110 110" opacity=".1"><circle cx="55" cy="55" r="50" stroke="#c9a84c" stroke-width=".7" fill="none"/><path d="M55 12L64 36L90 36L70 52L78 78L55 62L32 78L40 52L20 36L46 36Z" stroke="#c9a84c" stroke-width=".7" fill="none"/></svg>
+        <p style="font-family:'Cinzel',serif;font-size:.48rem;letter-spacing:.3em;color:rgba(201,168,76,.25);text-transform:uppercase;">Reemplazar con foto del producto</p>
+      </div>
+      <div class="pc-ov">
+        <p class="pc-marca pm1">Colores y Sabores de Oaxaca</p>
+        <h3 class="pc-name">Chocolate de <em>Mesa Oaxaqueño</em></h3>
+        <p class="pc-desc">Tablilla tradicional con cacao, canela y piloncillo. La receta de los valles centrales.</p>
+        <span class="pc-tag">Línea Clásica</span>
+      </div>
+    </div>
+    <!-- P2 -->
+    <div class="pc" data-m="m2">
+      <div class="pc-ph" style="background:linear-gradient(135deg,#1e0e05,#100a06 60%,#2a1208);">
+        <svg width="72" height="72" viewBox="0 0 72 72" opacity=".1"><polygon points="36,6 64,20 64,52 36,66 8,52 8,20" stroke="#c05a30" stroke-width=".7" fill="none"/><circle cx="36" cy="36" r="14" stroke="#c05a30" stroke-width=".5" fill="none"/></svg>
+        <p style="font-family:'Cinzel',serif;font-size:.45rem;letter-spacing:.3em;color:rgba(192,90,48,.22);text-transform:uppercase;">Foto del producto</p>
+      </div>
+      <div class="pc-ov">
+        <p class="pc-marca pm2">Molienda Tlahuica</p>
+        <h3 class="pc-name">Cacao <em>100% Amargo</em></h3>
+        <p class="pc-desc">Sin azúcar añadida. Perfil profundo para chefs y conocedores.</p>
+        <span class="pc-tag">Línea Prehispánica</span>
+      </div>
+    </div>
+    <!-- P3 -->
+    <div class="pc" data-m="m3">
+      <div class="pc-ph" style="background:linear-gradient(135deg,#0a1a0e,#06100a 60%,#0d2012);">
+        <svg width="72" height="72" viewBox="0 0 72 72" opacity=".1"><rect x="10" y="10" width="52" height="52" rx="2" stroke="#7ab870" stroke-width=".7" fill="none"/><rect x="20" y="20" width="32" height="32" rx="1" stroke="#7ab870" stroke-width=".5" fill="none" transform="rotate(45 36 36)"/></svg>
+        <p style="font-family:'Cinzel',serif;font-size:.45rem;letter-spacing:.3em;color:rgba(122,184,112,.22);text-transform:uppercase;">Foto del producto</p>
+      </div>
+      <div class="pc-ov">
+        <p class="pc-marca pm3">Verde Antequera</p>
+        <h3 class="pc-name">Tableta <em>Noir</em></h3>
+        <p class="pc-desc">Chocolate negro 72%. Elegancia mineral con notas de cantera.</p>
+        <span class="pc-tag">Alta Gama</span>
+      </div>
+    </div>
+    <!-- P4 -->
+    <div class="pc" data-m="m1">
+      <div class="pc-ph" style="background:linear-gradient(135deg,#2d1e0d,#1a1008);">
+        <svg width="72" height="72" viewBox="0 0 72 72" opacity=".1"><circle cx="36" cy="36" r="30" stroke="#c9a84c" stroke-width=".7" fill="none"/><circle cx="36" cy="36" r="18" stroke="#c9a84c" stroke-width=".5" fill="none"/><circle cx="36" cy="36" r="5" stroke="#c9a84c" stroke-width=".7" fill="none"/></svg>
+        <p style="font-family:'Cinzel',serif;font-size:.45rem;letter-spacing:.3em;color:rgba(201,168,76,.22);text-transform:uppercase;">Foto del producto</p>
+      </div>
+      <div class="pc-ov">
+        <p class="pc-marca pm1">Colores y Sabores de Oaxaca</p>
+        <h3 class="pc-name">Chocolate con <em>Especias</em></h3>
+        <p class="pc-desc">Vainilla, chile y canela. La complejidad aromática de Oaxaca en cada pieza.</p>
+        <span class="pc-tag">Línea Especial</span>
+      </div>
+    </div>
+    <!-- P5 -->
+    <div class="pc" data-m="m2">
+      <div class="pc-ph" style="background:linear-gradient(135deg,#1e0e05,#100a06);">
+        <svg width="72" height="72" viewBox="0 0 72 72" opacity=".1"><path d="M36 12 Q50 24 50 36 Q50 56 36 64 Q22 56 22 36 Q22 24 36 12Z" stroke="#c05a30" stroke-width=".7" fill="none"/></svg>
+        <p style="font-family:'Cinzel',serif;font-size:.45rem;letter-spacing:.3em;color:rgba(192,90,48,.22);text-transform:uppercase;">Foto del producto</p>
+      </div>
+      <div class="pc-ov">
+        <p class="pc-marca pm2">Molienda Tlahuica</p>
+        <h3 class="pc-name">Pasta de <em>Cacao Puro</em></h3>
+        <p class="pc-desc">Uso profesional en cocina de alta gama. Para moles y salsas de autor.</p>
+        <span class="pc-tag">Uso Gastronómico</span>
+      </div>
+    </div>
+    <!-- P6 -->
+    <div class="pc" data-m="m3">
+      <div class="pc-ph" style="background:linear-gradient(135deg,#0a1a0e,#06100a);">
+        <svg width="72" height="72" viewBox="0 0 72 72" opacity=".1"><rect x="14" y="14" width="44" height="44" rx="2" stroke="#7ab870" stroke-width=".7" fill="none"/><line x1="14" y1="36" x2="58" y2="36" stroke="#7ab870" stroke-width=".5" opacity=".6"/><line x1="36" y1="14" x2="36" y2="58" stroke="#7ab870" stroke-width=".5" opacity=".6"/></svg>
+        <p style="font-family:'Cinzel',serif;font-size:.45rem;letter-spacing:.3em;color:rgba(122,184,112,.22);text-transform:uppercase;">Foto del producto</p>
+      </div>
+      <div class="pc-ov">
+        <p class="pc-marca pm3">Verde Antequera</p>
+        <h3 class="pc-name">Cobertura <em>Premium</em></h3>
+        <p class="pc-desc">Para repostería de autor. Fluida, brillante, de intensidad excepcional.</p>
+        <span class="pc-tag">Repostería</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FRASE ═══ -->
+<div class="frase reveal">
+  <blockquote>
+    <p>"El cacao no es un ingrediente. Es el primer idioma <em>sagrado</em> de México."</p>
+    <cite>— Filosofía de la casa</cite>
+  </blockquote>
+</div>
+
+<!-- ═══ PROCESO ═══ -->
+<section id="proceso">
+  <div class="proc-hd reveal">
+    <div><p class="eyebrow">El Método</p><h2 class="sec-title">Proceso<br><em>artesanal</em></h2></div>
+    <p class="proc-q">"El chocolate verdadero no se fabrica. Se descubre en cada molienda."</p>
+  </div>
+  <div class="proc-grid">
+    <div class="paso reveal"><div class="paso-n">01</div><p class="paso-t">Selección del Grano</p><p class="paso-d">Cada grano de cacao es revisado y limpiado a mano. Solo los que cumplen el estándar continúan al siguiente paso.</p></div>
+    <div class="paso reveal d1"><div class="paso-n">02</div><p class="paso-t">Tostado Artesanal</p><p class="paso-d">El tostado sobre comal a temperatura controlada desarrolla los precursores aromáticos. Un momento irrepetible en cada lote.</p></div>
+    <div class="paso reveal d2"><div class="paso-n">03</div><p class="paso-t">Molienda en Piedra</p><p class="paso-d">Molinos de piedra auténticos transforman el grano en licor de cacao. Imposible de replicar industrialmente.</p></div>
+    <div class="paso reveal d3"><div class="paso-n">04</div><p class="paso-t">Formulación Final</p><p class="paso-d">Cada marca tiene su propia proporción de ingredientes, mezclados manualmente para preservar los aromas únicos de cada expresión.</p></div>
+  </div>
+</section>
+
+<!-- ═══ ALTA COCINA ═══ -->
+<section id="alta">
+  <div class="alta-c">
+    <div class="alta-t reveal">
+      <p class="eyebrow">Para Chefs</p>
+      <h2 class="sec-title">Diseñado para<br><em>la alta cocina</em></h2>
+      <p>Nuestros chocolates no son un ingrediente genérico. Son una declaración de identidad culinaria. Cada presentación está pensada para el chef que entiende el cacao como un lenguaje con dialecto propio.</p>
+      <p>Ofrecemos presentaciones especiales para cocina profesional, con asesoría técnica sobre aplicaciones y maridajes para menús de alta gama.</p>
+    </div>
+    <div class="chefs reveal d2">
+      <div class="chef"><div class="chef-i">◈</div><p class="chef-t">Repostería de Autor</p><p class="chef-d">Tabletas, coberturas y pastas para confitería artesanal y repostería de alta gama.</p></div>
+      <div class="chef"><div class="chef-i">⬡</div><p class="chef-t">Cocina Salada</p><p class="chef-d">Perfiles amargos para moles de autor, salsas complejas y marinadas oaxaqueñas.</p></div>
+      <div class="chef"><div class="chef-i">△</div><p class="chef-t">Bebidas de Autor</p><p class="chef-d">Para atoles, champurrados y bebidas de diseño con tradición prehispánica.</p></div>
+      <div class="chef"><div class="chef-i">○</div><p class="chef-t">Maridaje</p><p class="chef-d">Asesoría para experiencias con mezcal, vino y quesos artesanales oaxaqueños.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ GALERÍA ═══ -->
+<section id="galeria">
+  <div class="gal-hd reveal">
+    <div><p class="eyebrow">Galería</p><h2 class="sec-title">El <em>mundo</em><br>del cacao</h2></div>
+    <p class="gal-note">Imágenes del proceso, los productos y el territorio oaxaqueño. Reemplazar con fotografías reales de tu elección.</p>
+  </div>
+  <div class="gal-grid">
+    <div class="gi"><div class="gi-ph" style="background:linear-gradient(160deg,#2d1e0d,#1a1008);"><svg width="55" height="55" viewBox="0 0 55 55" opacity=".14"><circle cx="27" cy="27" r="22" stroke="#c9a84c" stroke-width=".6" fill="none"/><path d="M27 8L31 18L43 18L34 25L37 37L27 31L17 37L20 25L11 18L23 18Z" stroke="#c9a84c" stroke-width=".6" fill="none"/></svg></div><div class="gi-ov"><span class="gi-lbl">Proceso · Molienda</span></div></div>
+    <div class="gi"><div class="gi-ph" style="background:linear-gradient(160deg,#1e0e05,#100a06);"><svg width="44" height="44" viewBox="0 0 44 44" opacity=".14"><ellipse cx="22" cy="22" rx="18" ry="10" stroke="#c05a30" stroke-width=".6" fill="none"/></svg></div><div class="gi-ov"><span class="gi-lbl">Cacao · Vaina</span></div></div>
+    <div class="gi"><div class="gi-ph" style="background:linear-gradient(160deg,#0a1a0e,#06100a);"><svg width="44" height="44" viewBox="0 0 44 44" opacity=".14"><rect x="7" y="7" width="30" height="30" stroke="#7ab870" stroke-width=".6" fill="none" transform="rotate(45 22 22)"/></svg></div><div class="gi-ov"><span class="gi-lbl">Verde Antequera</span></div></div>
+    <div class="gi"><div class="gi-ph" style="background:linear-gradient(160deg,#1a1008,#2d1e0d);"><svg width="36" height="36" viewBox="0 0 36 36" opacity=".12"><circle cx="18" cy="18" r="14" stroke="#c9a84c" stroke-width=".6" fill="none"/></svg></div><div class="gi-ov"><span class="gi-lbl">Granos · Selección</span></div></div>
+    <div class="gi"><div class="gi-ph" style="background:linear-gradient(160deg,#100a06,#1e0e05);"><svg width="36" height="36" viewBox="0 0 36 36" opacity=".12"><polygon points="18,4 32,11 32,26 18,33 4,26 4,11" stroke="#c05a30" stroke-width=".6" fill="none"/></svg></div><div class="gi-ov"><span class="gi-lbl">Tlahuica · Comal</span></div></div>
+    <div class="gi"><div class="gi-ph" style="background:linear-gradient(160deg,#2d1e0d,#1a1008);"><svg width="36" height="36" viewBox="0 0 36 36" opacity=".12"><path d="M18 5 Q25 13 25 18 Q25 29 18 33 Q11 29 11 18 Q11 13 18 5Z" stroke="#c9a84c" stroke-width=".6" fill="none"/></svg></div><div class="gi-ov"><span class="gi-lbl">Alta Cocina</span></div></div>
+    <div class="gi"><div class="gi-ph" style="background:linear-gradient(160deg,#0d2012,#0a1a0e);"><svg width="36" height="36" viewBox="0 0 36 36" opacity=".12"><rect x="7" y="7" width="22" height="22" stroke="#7ab870" stroke-width=".6" fill="none"/></svg></div><div class="gi-ov"><span class="gi-lbl">Oaxaca · Territorio</span></div></div>
+    <div class="gi"><div class="gi-ph" style="background:linear-gradient(160deg,#1a1008,#0a0804);"><svg width="36" height="36" viewBox="0 0 36 36" opacity=".12"><line x1="4" y1="18" x2="32" y2="18" stroke="#c9a84c" stroke-width=".6"/><circle cx="18" cy="18" r="7" stroke="#c9a84c" stroke-width=".6" fill="none"/></svg></div><div class="gi-ov"><span class="gi-lbl">Metate · Tradición</span></div></div>
+  </div>
+  <div class="gal-cta reveal">
+    <a href="#contacto" class="btn-sec">Solicitar catálogo fotográfico</a>
+  </div>
+</section>
+
+<!-- ═══ CONTACTO ═══ -->
+<section id="contacto">
+  <div class="ct-rings"><span></span><span></span><span></span></div>
+  <div class="ct-in reveal">
+    <p class="eyebrow">Contacto Profesional</p>
+    <h2 class="sec-title">Solicitar<br><em>catálogo</em></h2>
+    <p>Para chefs, restaurantes y compradores especializados. Consulta presentaciones profesionales, precios de mayoreo y disponibilidad de temporada.</p>
+    <a href="/cdn-cgi/l/email-protection#cfaca0a1bbaeacbba08faca0a3a0bdaabcb6bcaeada0bdaabce1aca0a2" class="btn-gold">Escribir a la casa</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="ft-brand">Colores y Sabores de Oaxaca</div>
+  <div class="ft-marks">
+    <span>Colores y Sabores</span>
+    <span>Molienda Tlahuica</span>
+    <span>Verde Antequera</span>
+  </div>
+  <div class="ft-copy">Oaxaca, México · © 2025</div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// NAV SCROLL
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+// NAV TOGGLE MOBILE
+const tog=document.getElementById('navToggle'),mm=document.getElementById('mobileMenu');
+tog.addEventListener('click',()=>{
+  const o=mm.classList.toggle('open');
+  tog.classList.toggle('open',o);
+});
+mm.querySelectorAll('.mm-link').forEach(a=>a.addEventListener('click',()=>{
+  mm.classList.remove('open');tog.classList.remove('open');
+}));
+
+// BANNER PARALLAX
+const bSec=document.getElementById('banner-img');
+const bPhoto=bSec.querySelector('.b-photo');
+if(bPhoto){
+  window.addEventListener('scroll',()=>{
+    const r=bSec.getBoundingClientRect();
+    const p=-r.top/window.innerHeight;
+    bPhoto.style.transform=`scale(1.1) translateY(${p*50}px)`;
+  },{passive:true});
+}
+
+// BANNER IN-VIEW
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)bSec.classList.add('iv');});
+},{threshold:.25}).observe(bSec);
+
+// SCROLL REVEAL
+document.querySelectorAll('.reveal').forEach(el=>{
+  new IntersectionObserver(([e])=>{if(e.isIntersecting)el.classList.add('vis');},{threshold:.12}).observe(el);
+});
+
+// FILTER PRODUCTOS
+document.querySelectorAll('.fbtn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.f;
+    document.querySelectorAll('.pc').forEach(c=>{
+      const show=f==='all'||c.dataset.m===f;
+      c.style.display=show?'':'none';
+      // Reset featured on filter
+      if(f!=='all') c.classList.remove('feat');
+      else{        const cards=document.querySelectorAll('.pc');
+        if(cards.length>0) cards[0].classList.add('feat');
+      }
+    });
+  });
+});
+</script>
+
+<!-- ── CURSOR SEMILLA DE CACAO ── -->
+<div id="cursor-trail"></div>
+<div id="cursor-cacao">
+  <svg width="36" height="52" viewBox="0 0 36 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Forma principal de la semilla de cacao -->
+    <path d="M18 2 C10 2 3 10 3 22 C3 36 10 46 18 50 C26 46 33 36 33 22 C33 10 26 2 18 2Z"
+          fill="rgba(26,16,8,0.92)" stroke="#c9a84c" stroke-width="1.1"/>
+    <!-- Línea central vertical (nervadura) -->
+    <line x1="18" y1="6" x2="18" y2="46" stroke="#c9a84c" stroke-width="0.7" stroke-opacity="0.6"/>
+    <!-- Nervaduras laterales -->
+    <line x1="18" y1="14" x2="10" y2="20" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.4"/>
+    <line x1="18" y1="14" x2="26" y2="20" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.4"/>
+    <line x1="18" y1="22" x2="9"  y2="28" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.4"/>
+    <line x1="18" y1="22" x2="27" y2="28" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.4"/>
+    <line x1="18" y1="30" x2="11" y2="36" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.3"/>
+    <line x1="18" y1="30" x2="25" y2="36" stroke="#c9a84c" stroke-width="0.5" stroke-opacity="0.3"/>
+    <!-- Brillo sutil -->
+    <ellipse cx="13" cy="14" rx="3" ry="5" fill="rgba(232,201,122,0.08)" transform="rotate(-15 13 14)"/>
+  </svg>
+</div>
+
+<script>
+(function(){
+  const cursor = document.getElementById('cursor-cacao');
+  const trail  = document.getElementById('cursor-trail');
+  let mx=0,my=0,tx=0,ty=0;
+
+  document.addEventListener('mousemove', e=>{
+    mx=e.clientX; my=e.clientY;
+    cursor.style.left=mx+'px';
+    cursor.style.top =my+'px';
+  });
+
+  // Trail con pequeño retraso suave
+  (function animTrail(){
+    tx+=(mx-tx)*.12;
+    ty+=(my-ty)*.12;
+    trail.style.left=tx+'px';
+    trail.style.top =ty+'px';
+    requestAnimationFrame(animTrail);
+  })();
+
+  // Hover en elementos interactivos
+  const hoverEls='a,button,.pc,.mc,.paso,.chef,.fbtn,.btn-gold,.btn-sec,.nav-links a';
+  document.querySelectorAll(hoverEls).forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+  });
+
+  document.addEventListener('mousedown',()=>document.body.classList.add('cursor-click'));
+  document.addEventListener('mouseup',  ()=>document.body.classList.remove('cursor-click'));
+
+  // Ocultar cursor fuera de la ventana
+  document.addEventListener('mouseleave',()=>{cursor.style.opacity='0';trail.style.opacity='0';});
+  document.addEventListener('mouseenter',()=>{cursor.style.opacity='1';trail.style.opacity='1';});
+})();
+</script>
+</body>
+</html>
